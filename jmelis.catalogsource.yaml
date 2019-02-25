@@ -1,0 +1,15 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  generation: 1
+  name: jmelis-operators
+  namespace: jmelis
+spec:
+  configMap: jmelis-operators
+  displayName: jmelis-operators
+  publisher: jmelis
+  sourceType: internal
+status:
+  configMapReference:
+    name: jmelis-operators
+    namespace: jmelis

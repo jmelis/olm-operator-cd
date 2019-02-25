@@ -1,0 +1,160 @@
+apiVersion: v1
+data:
+  clusterServiceVersions: |2-
+
+    - apiVersion: operators.coreos.com/v1alpha1
+      kind: ClusterServiceVersion
+      metadata:
+        creationTimestamp: null
+        name: example-operator.v0.0.1
+        namespace: jmelis
+      spec:
+        apiservicedefinitions: {}
+        customresourcedefinitions:
+          owned:
+          - kind: AppService
+            name: appservices.app.example.com
+            version: v1alpha1
+            displayName: AppService
+            description: nmalik was here
+        description: Placeholder description
+        displayName: Example Operator
+        install:
+          spec:
+            deployments:
+            - name: example-operator
+              spec:
+                replicas: 1
+                selector:
+                  matchLabels:
+                    name: example-operator
+                strategy: {}
+                template:
+                  metadata:
+                    creationTimestamp: null
+                    labels:
+                      name: example-operator
+                  spec:
+                    containers:
+                    - command:
+                      - example-operator
+                      env:
+                      - name: WATCH_NAMESPACE
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: metadata.namespace
+                      - name: POD_NAME
+                        valueFrom:
+                          fieldRef:
+                            fieldPath: metadata.name
+                      - name: OPERATOR_NAME
+                        value: example-operator
+                      image: quay.io/nmalik/example-operator:latest
+                      imagePullPolicy: Always
+                      name: example-operator
+                      resources: {}
+                    serviceAccountName: example-operator
+            permissions:
+            - rules:
+              - apiGroups:
+                - ""
+                resources:
+                - pods
+                - services
+                - endpoints
+                - persistentvolumeclaims
+                - events
+                - configmaps
+                - secrets
+                verbs:
+                - '*'
+              - apiGroups:
+                - ""
+                resources:
+                - namespaces
+                verbs:
+                - get
+              - apiGroups:
+                - apps
+                resources:
+                - deployments
+                - daemonsets
+                - replicasets
+                - statefulsets
+                verbs:
+                - '*'
+              - apiGroups:
+                - monitoring.coreos.com
+                resources:
+                - servicemonitors
+                verbs:
+                - get
+                - create
+              - apiGroups:
+                - app.example.com
+                resources:
+                - '*'
+                verbs:
+                - '*'
+              serviceAccountName: example-operator
+          strategy: deployment
+        installModes:
+        - supported: true
+          type: OwnNamespace
+        - supported: true
+          type: SingleNamespace
+        - supported: true
+          type: MultiNamespace
+        - supported: true
+          type: AllNamespaces
+        maturity: alpha
+        provider: {}
+        version: 0.0.1
+
+  customResourceDefinitions: |2-
+
+    - apiVersion: apiextensions.k8s.io/v1beta1
+      kind: CustomResourceDefinition
+      metadata:
+        creationTimestamp: null
+        name: appservices.app.example.com
+      spec:
+        group: app.example.com
+        names:
+          kind: AppService
+          listKind: AppServiceList
+          plural: appservices
+          singular: appservice
+        scope: Namespaced
+        subresources:
+          status: {}
+        validation:
+          openAPIV3Schema:
+            properties:
+              apiVersion:
+                type: string
+              kind:
+                type: string
+              metadata:
+                type: object
+              spec:
+                type: object
+              status:
+                type: object
+        version: v1alpha1
+        versions:
+        - name: v1alpha1
+          served: true
+          storage: true
+
+  packages: |2-
+
+    - packageName: example-operator
+      channels:
+      - name: alpha
+        currentCSV: example-operator.v0.0.1
+
+kind: ConfigMap
+metadata:
+  name: jmelis-operators
+  namespace: jmelis
