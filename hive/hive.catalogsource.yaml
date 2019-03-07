@@ -1,0 +1,15 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  generation: 1
+  name: hive-operators
+  namespace: openshift-hive
+spec:
+  configMap: hive-operators
+  displayName: hive-operators
+  publisher: hive
+  sourceType: internal
+status:
+  configMapReference:
+    name: hive-operators
+    namespace: openshift-hive
