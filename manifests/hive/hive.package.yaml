@@ -1,4 +1,4 @@
 packageName: hive
 channels:
 - name: preview
-  currentCSV: hive-operator.v0.1.494
+  currentCSV: hive-operator.v0.1.494-hash
