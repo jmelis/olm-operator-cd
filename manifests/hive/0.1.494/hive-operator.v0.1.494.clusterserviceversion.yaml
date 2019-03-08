@@ -8,7 +8,7 @@ metadata:
     createdAt: '2019-03-08T10:53:23Z'
     description: OpenShift cluster provisioning and management at scale.
     support: Devan Goodwin
-  name: hive-operator.v0.1.494-3f73a592
+  name: hive-operator.v0.1.494
   namespace: placeholder
 spec:
   customresourcedefinitions:
@@ -333,5 +333,4 @@ spec:
   maturity: alpha
   provider:
     name: Red Hat, Inc
-  replaces: hive-operator-0.1.5-4b53b492
-  version: 0.1.494-3f73a592
+  version: 0.1.494
