@@ -333,4 +333,5 @@ spec:
   maturity: alpha
   provider:
     name: Red Hat, Inc
+  replaces: hive-operator.v0.1.5-hash
   version: 0.1.494-hash
